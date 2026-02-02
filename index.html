@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valentine Surprise 💘</title>
+
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    h1 {
+      margin-top: 120px;
+      color: #d63384;
+    }
+
+    button {
+      font-size: 22px;
+      padding: 12px 25px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    /* Start Button */
+    #startBtn {
+      background-color: #8b4513;
+      color: white;
+    }
+
+    #yes {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background-color: #adb5bd;
+      color: white;
+      position: absolute;
+    }
+
+    /* Blur effect */
+    .blur {
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    /* Overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.2);
+      z-index: 5;
+    }
+
+    /* Dialog Box */
+    #dialog {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 50px;
+      width: 380px;
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      z-index: 10;
+      font-size: 24px;
+      color: #d63384;
+    }
+
+    #closeBtn {
+      background-color: #8b4513;
+      color: white;
+      margin-top: 25px;
+    }
+
+    /* Falling animation */
+    .fall {
+      position: fixed;
+      top: -50px;
+      font-size: 30px;
+      animation: fall linear forwards;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="overlay"></div>
+
+  <!-- Screen 1 -->
+  <div id="screen1" class="screen active">
+    <h1>🎁 I have a gift for you 💝</h1>
+    <button id="startBtn" onclick="startApp()">
+      Start Application 💕
+    </button>
+  </div>
+
+  <!-- Screen 2 -->
+  <div id="screen2" class="screen">
+    <h1>💖 Will you be my Valentine? 💖</h1>
+    <button id="yes" onclick="yesClicked()">YES 💘</button>
+    <button id="no" onmouseover="moveNo()">NO 🙈</button>
+  </div>
+
+  <!-- Dialog -->
+  <div id="dialog">
+    💕 Yayyy!!! You made my day 💖  
+    <br><br>
+    Happy Valentine’s Day 🌹
+    <br>
+    <button id="closeBtn" onclick="closeApp()">Close Application ❌</button>
+  </div>
+
+  <script>
+    function startApp() {
+      document.getElementById("screen1").classList.remove("active");
+      document.getElementById("screen2").classList.add("active");
+    }
+
+    function yesClicked() {
+      document.getElementById("dialog").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("screen2").classList.add("blur");
+      startFalling();
+    }
+
+    function closeApp() {
+      window.close();
+    }
+
+    function moveNo() {
+      const noBtn = document.getElementById("no");
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    /* Hearts & Roses */
+    function startFalling() {
+      setInterval(() => {
+        const item = document.createElement("div");
+        item.className = "fall";
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.animationDuration = (3 + Math.random() * 3) + "s";
+        item.innerHTML = Math.random() > 0.5 ? "💖" : "🌹";
+        document.body.appendChild(item);
+
+        setTimeout(() => item.remove(), 6000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
